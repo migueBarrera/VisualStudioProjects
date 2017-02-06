@@ -1,0 +1,145 @@
+﻿<Page
+    x:Class="App2.Views.ViewCoches"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App2.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:vm="using:App2.ViewModels">
+    <Page.DataContext>
+        <vm:VMCoches></vm:VMCoches>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          Name="GridTotal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--Fila de Botones -->
+        <RelativePanel Grid.Row="0" >
+            <AppBarButton Icon="Save" Name="appSave"/>
+            <AppBarButton Icon="Delete" Name="appDelete" 
+                              Command="{Binding eliminarComand}" 
+                              RelativePanel.RightOf="appSave"/>
+            <TextBox Name="textoABuscar" PlaceholderText="Buscar : "
+                            RelativePanel.LeftOf="appfind" RelativePanel.AlignVerticalCenterWith="appfind"
+                            Text="{Binding CadenaABuscar , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <AppBarButton Icon="Find" RelativePanel.AlignRightWithPanel="True" Name="appfind"/>
+        </RelativePanel>
+
+        <!--Vista Principal-->
+        <Grid Name="GridVista" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Lista de coches-->
+            <ScrollViewer Name="scrollLista" >
+                <ListView Name="Listacoches" 
+                      ItemsSource="{Binding Listado}"
+                      SelectedItem="{Binding Coche,Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Fabricante}"/>
+                                <TextBlock Text="{Binding Modelo}"
+                                       Margin="4,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+
+
+            <!--Informacion del coche seleccionado-->
+            <Grid Grid.Column="1"  DataContext="{Binding Coche}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--DATOS REFERENTES AL FABRICANTE-->
+                <TextBlock Text="Fabricante:"
+                       x:Name="lblfabricante" 
+                       Grid.Column="0"
+                       Grid.Row="0"/>
+                <TextBox x:Name="txtFabricante"
+                     Grid.Column="1"
+                     Grid.Row="0"
+                     Text="{Binding Fabricante, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <!--DATOS REFERENTES A LOS MODELOS-->
+                <TextBlock Text="Modelo:" 
+                       x:Name="lblModelo"
+                       Grid.Column="0"
+                       Grid.Row="1"/>
+                <TextBox x:Name="txtModelo"
+                     Grid.Column="1" Grid.Row="1" 
+                     Text="{Binding Modelo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <!--DATOS REFERENTES AL TIPO-->
+                <TextBlock Text="Tipo de vehiculo:"
+                       x:Name="lblTipo"
+                       Grid.Column="0" 
+                       Grid.Row="2"/>
+                <TextBox x:Name="txtTipoa"
+                     Grid.Column="1"
+                     Grid.Row="2"
+                     Text="{Binding Tipo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <!--DATOS REFERENTES AL MOTOR-->
+                <TextBlock Text="Motor:"
+                       x:Name="lblMotor"
+                       Grid.Column="0"
+                       Grid.Row="3"/>
+                <TextBox x:Name="txtMotor"
+                     Grid.Column="1"
+                     Grid.Row="3"
+                     Text="{Binding Motor, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <!--DATOS REFERENTES A LA CABALLOS-->
+                <TextBlock Text="Caballos:"
+                       x:Name="lblCaballos"
+                       Grid.Column="0"
+                       Grid.Row="4"/>
+                <ScrollViewer Grid.Column="1" Grid.Row="4">
+                    <TextBox x:Name="txtCaballos" 
+                         Grid.Column="1"
+                         Grid.Row="4"
+                         Text="{Binding Caballos, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+
+        <!--No funcioanaba bien y esta aqui fuera en para mas adelanttee-->
+        <!--TRIGGER PARA CAMBIAR DE FORMA CUANDO LA PANTALLA ES MAS PEQUEÑA-->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="700"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="mobil">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+    </Grid>
+</Page>

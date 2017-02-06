@@ -1,0 +1,23 @@
+﻿
+
+<h1>Bienvenido al Login</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (!String.IsNullOrEmpty(ViewBag.error))
+    {
+        <label>@ViewBag.error</label>
+        <br/>
+    }
+    <label>Introduzca el Nombre de usuario :</label>
+    <input type="text" id="userName" name="userName"/>
+    <br/>
+    <label>Introduzca la password</label>
+    <input type="password" id="password" name="password"/>
+
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Index" class="btn btn-default" /> |
+    </div>
+}
